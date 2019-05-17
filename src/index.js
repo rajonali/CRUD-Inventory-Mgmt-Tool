@@ -11,26 +11,30 @@ import * as serviceWorker from './serviceWorker';
 import Report from './pages/report';
 import ImportProduct from './pages/importProduct';
 import EndDay from './pages/endDay';
+import { Button } from 'react-bootstrap';
 
 
 const routing = (
     <Router>
     <div>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/import">Import</Link>
-        </li>
-        <li>
-          <Link to="/report">Report</Link>
-        </li>
-        <li>
-          <Link to="/endday">End-Day</Link>
-        </li>
+    <link
+                        rel="stylesheet"
+                        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+                        crossorigin="anonymous"/>
 
-      </ul>
+        <button style={{width:"25%", height:"100px"}}>
+          <a href="/">HOME</a>
+          </button>
+          <button style={{width:"25%", height:"100px"}}>
+          <a href="/import">IMPORT</a>
+          </button>
+          <button style={{width:"25%", height:"100px"}}>
+          <Link to="/report">REPORT</Link>
+          </button>
+          <button style={{width:"25%", height:"100px"}}>
+          <Link to="/endday">END-DAY</Link>
+          </button>
         <Route exact path="/" component={App} />
         <Route path="/import" component={ImportProduct} />
         <Route path="/report" component={Report} />
