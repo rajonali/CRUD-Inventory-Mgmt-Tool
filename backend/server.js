@@ -3,44 +3,64 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+
 const inventoryRoutes = express.Router();
+
+
 const PORT = 4000;
-let Item = require('./item.model');
+
+
+
 app.use(cors());
 app.use(bodyParser.json());
-mongoose.connect('mongodb://127.0.0.1:27017/item', { useNewUrlParser: true });
-const connection = mongoose.connection;
-connection.once('open', function() {
-    console.log("MongoDB database connection established successfully");
-})
+
+
+
+//Set up default mongoose connection
+var mongoDB = 'mongodb://127.0.0.1/products';
+mongoose.connect(mongoDB, { useNewUrlParser: true });
+
+//Get the default connection
+var db = mongoose.connection;
+
+//Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+const ProductSchema = require('./product.model');
+
+// Compile model from schema
+var ProductModel = mongoose.model('ProductModel', ProductSchema );
+
+
+
 inventoryRoutes.route('/').get(function(req, res) {
-    Item.find(function(err, items) {
+    ProductModel.find(function(err, products) {
         if (err) {
             console.log(err);
         } else {
-            res.json(items);
+            res.json(products);
         }
     });
 });
 
 inventoryRoutes.route('/:id').get(function(req, res) {
     let id = req.params.id;
-    Item.findById(id, function(err, item) {
-        res.json(item);
+    ProductModel.findById(id, function(err, product) {
+        res.json(product);
     });
 });
 
 inventoryRoutes.route('/update:id').post(function(req, res) {
-    Item.findById(req.params.id, function(err, item) {
-        if (!item)
+    ProductModel.findById(req.params.id, function(err, product) {
+        if (!product)
             res.status(404).send("data is not found");
         else
-            item.item_upc = req.body.item_upc;
-            item.item_name = req.body.item_name;
-            item.item_quantity = req.body.item_quantity;
-            item.item_price = req.body.item_price;
-            item.save().then(item => {
-                res.json('Items updated!');
+            product.product_upc = req.body.product_upc;
+            product.product_name = req.body.product_name;
+            product.product_quantity = req.body.product_quantity;
+            product.product_price = req.body.product_price;
+            product.save().then(product => {
+                res.json('products updated!');
             })
             .catch(err => {
                 res.status(400).send("Update not possible");
@@ -49,16 +69,19 @@ inventoryRoutes.route('/update:id').post(function(req, res) {
 });
 
 inventoryRoutes.route('/add').post(function(req, res) {
-    let item = new Item(req.body);
-    item.save()
-        .then(todo => {
-            res.status(200).json({'itemX': 'itemX added successfully'});
-        })
-        .catch(err => {
-            res.status(400).send('adding new item failed');
-        });
+    var awesome_instance = new ProductModel(req.body);
+    awesome_instance.save().then(product => {
+        res.json('products updated!');
+    })
+    .catch(err => {
+        res.status(400).send("Update not possible");
+    });
+    
+      
+
 });
-app.use('/items', inventoryRoutes);
+app.use('/products', inventoryRoutes);
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
 });
+
