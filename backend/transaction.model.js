@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 //Define a schema
 var Schema = mongoose.Schema;
 
-var ProductModelSchema = new Schema({
+var TransactionModelSchema = new Schema({
     product_upc: {
         type: mongoose.Schema.Types.Mixed,
         required: true,
@@ -11,10 +11,10 @@ var ProductModelSchema = new Schema({
         type: mongoose.Schema.Types.Mixed,
         required: true,
       },
-      product_price: {
+      transaction_total: {
         type: mongoose.Schema.Types.Mixed,
         required: true,
       }
     })
     
-module.exports = mongoose.model('Product', ProductModelSchema);
+module.exports = mongoose.model('Transaction', TransactionModelSchema);;

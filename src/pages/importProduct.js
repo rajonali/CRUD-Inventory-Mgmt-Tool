@@ -9,8 +9,8 @@ class ImportProduct extends React.Component {
         this.state = {
             products: [],
             product_upc: "",
-            product_price: 0,
-            product_quantity: 0
+            product_price: "",
+            product_quantity: ""
         };
         this.onSubmit = this
             .onSubmit
@@ -28,6 +28,7 @@ class ImportProduct extends React.Component {
             .catch(function (error) {
                 console.log(error);
             })
+            
     }
 
     onSubmit = () => {
@@ -140,7 +141,7 @@ class ImportProduct extends React.Component {
                                 {products.map((product => <tr>
                                     <td>{product.product_upc}</td>
                                     <td>{product.product_quantity}</td>
-                                    <td>${product.product_price}</td>
+                                    <td>{product.product_price}</td>
                                 </tr>))}
                             </tbody>
                         </table>
