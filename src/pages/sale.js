@@ -79,8 +79,21 @@ class Sale extends React.Component {
     };
 
     onChangeUPC = (e) => {
+        axios
+        .get('http://localhost:7000/products/'+e.target.value)
+        .then(response => {
+            var jsun = JSON.parse(JSON.stringify(response.data));
+            var qty = jsun[0]['product_quantity'];
+            var price = jsun[0]['product_price'];
+            this.setState({product_quantity: qty});
+            this.setState({product_price: price});
 
-        var data = JSON.parse(JSON.stringify(this.state.products));
+
+            
+        })
+        .catch(function (error) {
+            console.log(error);
+        }) 
     }
 
     render() {
@@ -102,7 +115,7 @@ class Sale extends React.Component {
                             </h3><br/>
                             <div style={{}}>
                                 <label>
-                                    <pre>UPC: <input onChange={this.onChangeUPC.bind(this)} ref="product_upc"></input> @ ${this.state.product_upc}</pre>
+                                    <pre>UPC: <input onChange={this.onChangeUPC.bind(this)} ref="product_upc"></input> @ ${this.state.product_price}</pre>
                                 </label><br/>
                                 <label>
                                     <pre>Qty: <input onChange={this.addTotal.bind(this)} ref="product_qty"></input> {this.state.product_quantity} Available</pre>
