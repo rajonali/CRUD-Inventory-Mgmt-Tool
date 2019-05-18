@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
+
+
 const inventoryRoutes = express.Router();
 
 
@@ -17,7 +19,7 @@ app.use(bodyParser.json());
 
 
 //Set up default mongoose connection
-var mongoDB = 'mongodb://127.0.0.1/products';
+var mongoDB = 'mongodb://127.0.0.1/data';
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 
 //Get the default connection

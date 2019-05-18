@@ -24,13 +24,13 @@ const routing = (
                         crossorigin="anonymous"/>
 
         <button style={{width:"25%", height:"100px"}}>
-          <a href="/">HOME</a>
+          <a href="/">SALE</a>
           </button>
           <button style={{width:"25%", height:"100px"}}>
           <a href="/import">IMPORT</a>
           </button>
           <button style={{width:"25%", height:"100px"}}>
-          <Link to="/report">REPORT</Link>
+          <Link to="/report">REPORTS</Link>
           </button>
           <button style={{width:"25%", height:"100px"}}>
           <Link to="/endday">END-DAY</Link>

@@ -9,8 +9,8 @@ class ImportProduct extends React.Component {
         this.state = {
             products: [],
             product_upc: "",
-            product_price: "",
-            product_quantity: ""
+            product_price: 0,
+            product_quantity: 0
         };
         this.onSubmit = this
             .onSubmit
@@ -20,7 +20,7 @@ class ImportProduct extends React.Component {
 
     componentDidMount() {
         axios
-            .get('http://localhost:4000/products/')
+            .get('http://localhost:7000/products/')
             .then(response => {
                 this.setState({products: response.data});
                 console.log(this.state.products)
@@ -38,7 +38,7 @@ class ImportProduct extends React.Component {
         };
 
         axios
-            .post('http://localhost:4000/products/add', info)
+            .post('http://localhost:7000/products/add', info)
             .then(res => {
                 console.log('POSTRESULTSDATA:' + res.data);
                 //console.log(JSON.stringify(info))
@@ -115,7 +115,7 @@ class ImportProduct extends React.Component {
                                                                 
 
                             </div>
-                            <button onClick={this.onSubmit} type="submit" className="btn btn-primary">Save Product
+                            <button onClick={this.onSubmit} type="submit">Save Product
                             </button>
                             </center>
 
@@ -140,7 +140,7 @@ class ImportProduct extends React.Component {
                                 {products.map((product => <tr>
                                     <td>{product.product_upc}</td>
                                     <td>{product.product_quantity}</td>
-                                    <td>{product.product_price}</td>
+                                    <td>${product.product_price}</td>
                                 </tr>))}
                             </tbody>
                         </table>
