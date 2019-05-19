@@ -8,9 +8,9 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import Report from './pages/report';
-import ImportProduct from './pages/importProduct';
-import EndDay from './pages/endDay';
+import ReportPage from './pages/report';
+import ProductsPage from './pages/products';
+import OperationsPage from './pages/operations';
 import { Button } from 'react-bootstrap';
 
 
@@ -24,21 +24,21 @@ const routing = (
                         crossorigin="anonymous"/>
 
         <button style={{width:"25%", height:"100px"}}>
-          <a href="/">SALE</a>
+          <a href="/" style={{color:'black'}}>SALE</a>
           </button>
           <button style={{width:"25%", height:"100px"}}>
-          <a href="/import">IMPORT</a>
+          <a href="/products" style={{color:'black'}}>PRODUCTS</a>
           </button>
           <button style={{width:"25%", height:"100px"}}>
-          <Link to="/report">REPORTS</Link>
+          <a href="/reports" style={{color:'black'}}>REPORTS</a>
           </button>
           <button style={{width:"25%", height:"100px"}}>
-          <Link to="/endday">END-DAY</Link>
+          <a href="/operations" style={{color:'black'}}>OPERATIONS</a>
           </button>
         <Route exact path="/" component={App} />
-        <Route path="/import" component={ImportProduct} />
-        <Route path="/report" component={Report} />
-        <Route path="/endday" component={EndDay} />
+        <Route path="/products" component={ProductsPage} />
+        <Route path="/reports" component={ReportPage} />
+        <Route path="/operations" component={OperationsPage} />
       </div>
     </Router>
   )

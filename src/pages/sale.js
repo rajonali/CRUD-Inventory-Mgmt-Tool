@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 
 
 
-class Sale extends React.Component {
+class SalePage extends React.Component {
 
     constructor(props) {
         super(props);
@@ -14,10 +14,9 @@ class Sale extends React.Component {
             transactions: [],
             products: [],
             product_upc: "",
-            product_price: 0.00,
-            product_type: "",
+            product_category: "",
             product_name: "",
-            product_quantity: 0,
+            product_quantity: 1,
             transaction_total: 0
         };
         this.onSubmit = this
@@ -48,19 +47,13 @@ class Sale extends React.Component {
 
     }
 
-    addTotal = (e) => {
-        this.setState({
-            transaction_total: (this.state.product_price * e.target.value)
-        });
-    }
 
     onSubmit = () => {
         const info = {
             product_upc: this.refs.product_upc.value,
-            product_quantity: this.refs.product_qty.value,
+            product_quantity: this.refs.product_quantity.value,
             transaction_total: this.state.transaction_total
         };
-        console.log(info);
         axios
             .post('http://localhost:7000/transactions/add', info)
             .then(res => {
@@ -96,6 +89,17 @@ class Sale extends React.Component {
         }) 
     }
 
+
+    onChangeQty = (e) => {
+        var newQty=(parseInt(this.state.product_quantity, 10) - e.target.value)
+        console.log(newQty);
+        //console.log(this.state.product_quantity);
+        this.setState({
+            transaction_total: (this.state.product_price * e.target.value)
+        });
+    }
+
+
     render() {
 
         let transactions = this.state.transactions
@@ -114,12 +118,16 @@ class Sale extends React.Component {
                                 <strong>Enter Sale:</strong>
                             </h3><br/>
                             <div style={{}}>
+                            <h1>{this.state.product_name}</h1>
+                            <h1>{this.state.product_category}</h1>
+                            <h1></h1>
                                 <label>
                                     <pre>UPC: <input onChange={this.onChangeUPC.bind(this)} ref="product_upc"></input> @ ${this.state.product_price}</pre>
                                 </label><br/>
                                 <label>
-                                    <pre>Qty: <input onChange={this.addTotal.bind(this)} ref="product_qty"></input> {this.state.product_quantity} Available</pre>
+                                    <pre>Qty: <input onChange={this.onChangeQty.bind(this)} ref="product_quantity"></input> {this.state.product_quantity} Available</pre>
                                 </label><br/>
+
                             </div>
                             <label>TOTAL:</label>
                             <h3 ref="transaction_total">
@@ -151,7 +159,7 @@ class Sale extends React.Component {
 
                                         <tr>
                                             <th scope="col">UPC</th>
-                                            <th scope="col">Type</th>
+                                            <th scope="col">Category</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Qty</th>
                                             <th scope="col">Total</th>
@@ -180,4 +188,4 @@ class Sale extends React.Component {
     }
 }
 
-export default Sale
+export default SalePage

@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-class EndDay extends React.Component {
+class OperationsPage extends React.Component {
   render() {
     return(
       <div>
@@ -17,7 +17,7 @@ class EndDay extends React.Component {
                         crossorigin="anonymous"/>
 
                     <strong>
-                        End-Day
+                        Operations
                     </strong>
                 </header>
 <body style={{
@@ -29,4 +29,4 @@ class EndDay extends React.Component {
         }}
 
 
-        export default EndDay;
+        export default OperationsPage;
