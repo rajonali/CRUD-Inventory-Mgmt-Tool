@@ -9,10 +9,11 @@ Open source Inventory Management/Point of Sale is a web based point of sale syst
 
 Current features are:
 
-✅ Stock management (Items and Kits)
-✅ Sale register with transactions logging
+✅ Stock management (Items and Kits)\
+✅ Sale register with transactions logging\
 
 To-Do:
+------
 * Deploy to Netlify
 * Expenses logging
 * Taxation
