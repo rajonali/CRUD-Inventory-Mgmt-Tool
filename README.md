@@ -1,14 +1,20 @@
-CRUD Inventory Management Tool
 
-Technologies: React, MangoDB, Express, and Node
+
+# CRUD Inventory Management Tool
+
+## Technologies
+  React, MangoDB, Express, and Node
+
+## Run Project
 
 Client:
 
 cd CRUD-Inventory-Mgmt-Tool/
 yarn add
+yarn run dev
 
 Server:
-
+mongod (need Mongodb installed)
 cd backend/
 yarn add
 yarn run dev
@@ -29,23 +35,14 @@ To-Do:
 ------
 * Deploy to Netlify
 * Expenses logging
+* Reporting on sales, orders, expenses, inventory status
 * Taxation
 * Invoicing
 * Receipt and invoice printing and/or emailing
 * Barcode generation and printing
 * Suppliers and Customers database
-* Multiuser with permission control
-* Reporting on sales, orders, expenses, inventory status
+* Authentication and multiuser with permission control
 * Receivings
-* Giftcard
-* Rewards
-* Restaurant tables
-* Messaging (SMS)
-* Multilanguage
-* Selectable Boostrap (Bootswatch) based UI theme
-* Mailchimp integration
-* reCAPTCHA to protect login page from brute force attacks
-* GDPR ready
 
 The software is written in Javascript language, uses React Framework, MongoDB as data storage, and an Express back-end server for the REST API. It has a simple but intuitive user interface.
 
