@@ -2,6 +2,19 @@ CRUD Inventory Management Tool
 
 Technologies: React, MangoDB, Express, and Node
 
+Client:
+
+cd CRUD-Inventory-Mgmt-Tool/
+yarn add
+
+Server:
+
+cd backend/
+yarn add
+yarn run dev
+
+
+
 Description:
 ------------
 
@@ -9,7 +22,7 @@ Open source Inventory Management/Point of Sale is a web based point of sale syst
 
 Current features are:
 
-✅ Stock management (Items and Kits)\
+✅ Stock management\
 ✅ Sale register with transactions logging\
 
 To-Do:
