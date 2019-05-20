@@ -14,10 +14,10 @@ yarn add
 yarn run dev
 
 Server:
-mongod (need Mongodb installed)
-cd backend/
-yarn add
-yarn run dev
+mongod (need Mongodb installed)\
+cd backend/\
+yarn add\
+yarn run dev\
 
 
 
