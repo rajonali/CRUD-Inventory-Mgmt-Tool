@@ -7,6 +7,15 @@ var TransactionModelSchema = new Schema({
         type: mongoose.Schema.Types.Mixed,
         required: true,
       },
+      product_name: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true,
+      },
+      product_category: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true,
+      },
+      
       product_quantity: {
         type: mongoose.Schema.Types.Mixed,
         required: true,

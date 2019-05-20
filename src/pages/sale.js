@@ -16,7 +16,7 @@ class SalePage extends React.Component {
             product_upc: "",
             product_category: "",
             product_name: "",
-            product_quantity: 1,
+            product_quantity: 0,
             transaction_total: 0
         };
         this.onSubmit = this
@@ -52,7 +52,10 @@ class SalePage extends React.Component {
         const info = {
             product_upc: this.refs.product_upc.value,
             product_quantity: this.refs.product_quantity.value,
+            product_name: this.state.product_name,
+            product_category: this.state.product_category,
             transaction_total: this.state.transaction_total
+
         };
         axios
             .post('http://localhost:7000/transactions/add', info)
@@ -76,8 +79,13 @@ class SalePage extends React.Component {
         .get('http://localhost:7000/products/'+e.target.value)
         .then(response => {
             var jsun = JSON.parse(JSON.stringify(response.data));
+            var name = jsun[0]['product_name'];
+            var category = jsun[0]['product_category'];            
             var qty = jsun[0]['product_quantity'];
             var price = jsun[0]['product_price'];
+
+            this.setState({product_name: name});
+            this.setState({product_category: category});
             this.setState({product_quantity: qty});
             this.setState({product_price: price});
 
@@ -118,9 +126,13 @@ class SalePage extends React.Component {
                                 <strong>Enter Sale:</strong>
                             </h3><br/>
                             <div style={{}}>
-                            <h1>{this.state.product_name}</h1>
-                            <h1>{this.state.product_category}</h1>
-                            <h1></h1>
+                            <label>
+                                    <pre>Name: {this.state.product_name}</pre>
+                                </label><br/>
+                                <label>
+                                    <pre>Category: {this.state.product_category}</pre>
+                                </label><br/>
+
                                 <label>
                                     <pre>UPC: <input onChange={this.onChangeUPC.bind(this)} ref="product_upc"></input> @ ${this.state.product_price}</pre>
                                 </label><br/>
@@ -169,7 +181,7 @@ class SalePage extends React.Component {
 
                                         {transactions.map((product => <tr>
                                             <td>{product.product_upc}</td>
-                                            <td>{product.product_type}</td>
+                                            <td>{product.product_category}</td>
                                             <td>{product.product_name}</td>
                                             <td>{product.product_quantity}</td>
                                             <td>{product.transaction_total}</td>

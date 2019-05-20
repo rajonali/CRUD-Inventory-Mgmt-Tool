@@ -115,33 +115,34 @@ routes
 routes
     .route('/products/:upc')
     .get(function (req, res) {
-         return Products.find({product_upc:req.params.upc}, function(err, obj) { res.json(obj); }).select({ "product_price": 1,"product_quantity": 1, "_id": 0});
+         return Products.find({product_upc:req.params.upc}, function(err, obj) { res.json(obj); }).select({ "product_price": 1,"product_name": 1,"product_category": 1, "product_quantity": 1, "_id": 0})
+         .then(product => {
+            res.json(product);
+        })
+        .catch(err => {
+            res
+                .status(400)
+                .send("Update not possible");
+        });
         })
 
 routes
-    .route('/products/update:id')
-    .post(function (req, res) {
-        Products
-            .findById(req.params.id, function (err, product) {
-                if (!product) 
-                    res.status(404).send("data is not found");
-                else 
-                    product.product_upc = req.body.product_upc;
-                product.product_name = req.body.product_name;
-                product.total = req.body.total;
-
-                product
-                    .save()
-                    .then(product => {
-                        res.json('products updated!');
-                    })
-                    .catch(err => {
-                        res
-                            .status(400)
-                            .send("Update not possible");
-                    });
+    .route('/products/update/:id')
+        .get(function (req, res) {
+            Products.find({product_upc:req.params.id}, function(err, obj) { 
+                res.json(obj);
+            })
+            .save()
+            .then(product => {
+                res.json(req.body);
+            })
+            .catch(err => {
+                res
+                    .status(400)
+                    .send("Update not possible");
             });
-    });
+    })
+
 
 mongoose.connect(url, function (err, db) {
     if (err) {

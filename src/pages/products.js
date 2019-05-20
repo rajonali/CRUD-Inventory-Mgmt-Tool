@@ -34,6 +34,7 @@ class ProductsPage extends React.Component {
     }
 
     onSubmit = () => {
+        
         const info = {
             "product_upc": this.refs.product_upc.value,
             "product_name": this.refs.product_name.value,
@@ -41,6 +42,9 @@ class ProductsPage extends React.Component {
             "product_quantity": this.refs.product_quantity.value,
             "product_price": this.refs.product_price.value
         };
+
+
+        
 
         axios
             .post('http://localhost:7000/products/add', info)
