@@ -7,18 +7,21 @@
 
 ## Run Project
 
-Client:  
+Client: <br/>  
 
-cd CRUD-Inventory-Mgmt-Tool/ . 
-yarn add . 
-yarn run start . 
+cd CRUD-Inventory-Mgmt-Tool </br>
 
-Server:  
+yarn add <br/>
 
-mongod (need Mongodb installed) . 
-cd backend/ . 
-yarn add\ . 
-yarn run dev . 
+yarn run start <br/>
+
+
+Server:  <br/>
+
+mongod (need Mongodb installed) <br/>
+cd backend/ <br/>
+yarn add\ <br/>
+yarn run dev <br/>
 
 
 
@@ -29,8 +32,8 @@ Open source Inventory Management/Point of Sale is a web based point of sale syst
 
 Current features are:
 
-✅ Stock management
-✅ Sale register with transactions logging
+✅ Stock management <br/>
+✅ Sale register with transactions logging <br/>
 
 To-Do:
 ------
