@@ -3,22 +3,22 @@
 # CRUD Inventory Management Tool
 
 ## Technologies
-  React, MangoDB, Express, and Node
+  React, MongoDB, Express, and Node
 
 ## Run Project
 
-Client:
+Client:  
 
-cd CRUD-Inventory-Mgmt-Tool/\
-yarn add
-yarn run start
+cd CRUD-Inventory-Mgmt-Tool/ . 
+yarn add . 
+yarn run start . 
 
-Server:
+Server:  
 
-mongod (need Mongodb installed)\
-cd backend/\
-yarn add\
-yarn run dev
+mongod (need Mongodb installed) . 
+cd backend/ . 
+yarn add\ . 
+yarn run dev . 
 
 
 
