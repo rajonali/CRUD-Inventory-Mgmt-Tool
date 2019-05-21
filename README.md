@@ -29,8 +29,8 @@ Open source Inventory Management/Point of Sale is a web based point of sale syst
 
 Current features are:
 
-✅ Stock management\
-✅ Sale register with transactions logging\
+✅ Stock management
+✅ Sale register with transactions logging
 
 To-Do:
 ------
@@ -45,7 +45,7 @@ To-Do:
 * Authentication and multiuser with permission control
 * Receivings
 
-The software is written in Javascript language, uses React Framework, MongoDB as data storage, and an Express back-end server for the REST API. It has a simple but intuitive user interface.
+The software is written in Javascript language, uses React Framework, MongoDB as data storage, and an Express back-end server for the REST API.
 
 Demo:
 -----
