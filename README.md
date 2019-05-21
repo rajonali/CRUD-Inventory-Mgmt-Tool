@@ -9,7 +9,7 @@
 
 Client:
 
-cd CRUD-Inventory-Mgmt-Tool/
+cd CRUD-Inventory-Mgmt-Tool/\
 yarn add
 yarn run dev
 
