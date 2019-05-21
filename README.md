@@ -11,7 +11,7 @@ Client:
 
 cd CRUD-Inventory-Mgmt-Tool/\
 yarn add
-yarn run dev
+yarn run start
 
 Server:
 
