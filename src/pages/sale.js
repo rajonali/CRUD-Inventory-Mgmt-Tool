@@ -17,7 +17,8 @@ class SalePage extends React.Component {
             product_category: "",
             product_name: "",
             product_quantity: 0,
-            transaction_total: 0
+            transaction_total: 0,
+            new_quantity: 0
         };
         this.onSubmit = this
             .onSubmit
@@ -47,16 +48,29 @@ class SalePage extends React.Component {
 
     }
 
+    
+
 
     onSubmit = () => {
         const info = {
             product_upc: this.refs.product_upc.value,
-            product_quantity: this.refs.product_quantity.value,
+            product_quantity: this.state.new_quantity,
             product_name: this.state.product_name,
-            product_category: this.state.product_category,
-            transaction_total: this.state.transaction_total
+            product_category: this.state.product_category
+            //transaction_total: this.state.transaction_total
 
         };
+        //alert(this.state.new_quantity);
+        axios
+            .post('http://localhost:7000/products/update', info)
+            .then(res => {
+                console.log('POSTRESULTSDATA:' + res.data);
+                //console.log(JSON.stringify(info))
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+            
         axios
             .post('http://localhost:7000/transactions/add', info)
             .then(res => {
@@ -75,14 +89,21 @@ class SalePage extends React.Component {
     };
 
     onChangeUPC = (e) => {
-        axios
-        .get('http://localhost:7000/products/'+e.target.value)
+        //console.log(e.target.value);
+
+
+        fetch('http://localhost:7000/products/'+e.target.value)
         .then(response => {
-            var jsun = JSON.parse(JSON.stringify(response.data));
-            var name = jsun[0]['product_name'];
-            var category = jsun[0]['product_category'];            
-            var qty = jsun[0]['product_quantity'];
-            var price = jsun[0]['product_price'];
+
+            
+            console.log(response.json());
+            var jsun = JSON.parse(response.data);
+
+            var name = jsun['product_name'];
+            var category = jsun['product_category'];            
+            var qty = jsun['product_quantity'];
+            var price = jsun['product_price'];
+            console.log("NAME:"+name);
 
             this.setState({product_name: name});
             this.setState({product_category: category});
@@ -99,12 +120,20 @@ class SalePage extends React.Component {
 
 
     onChangeQty = (e) => {
-        var newQty=(parseInt(this.state.product_quantity, 10) - e.target.value)
-        console.log(newQty);
+        //var newQty=(parseInt(this.state.product_quantity, 10) - parseInt(e.target.value, 10))
+        //console.log(newQty);
         //console.log(this.state.product_quantity);
+        if (e.target.value != undefined) { 
         this.setState({
+            //new_quantity:  (parseInt(this.state.product_quantity, 10)-parseInt(e.target.value, 10)),
             transaction_total: (this.state.product_price * e.target.value)
         });
+        console.log("NEW QUANT" + this.state.transaction_total);
+    }
+    else {
+        return
+    }
+
     }
 
 

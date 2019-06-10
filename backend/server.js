@@ -13,6 +13,7 @@ const MongoClient = require('mongodb').MongoClient
 const routes = express.Router();
 
 app.use(cors());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 const Transactions = require('./transaction.model');
@@ -112,29 +113,19 @@ routes
             });
     })
 
-routes
-    .route('/products/:upc')
-    .get(function (req, res) {
-         return Products.find({product_upc:req.params.upc}, function(err, obj) { res.json(obj); }).select({ "product_price": 1,"product_name": 1,"product_category": 1, "product_quantity": 1, "_id": 0})
-         .then(product => {
-            res.json(product);
-        })
-        .catch(err => {
-            res
-                .status(400)
-                .send("Update not possible");
-        });
-        })
+///////////
 
 routes
-    .route('/products/update/:id')
-        .get(function (req, res) {
-            Products.find({product_upc:req.params.id}, function(err, obj) { 
-                res.json(obj);
-            })
-            .save()
+    .route('/products/:id')
+    .get(function (req, res) {
+        Products.find({
+            "_id": req.params.id
+        }, function (err, obj) {
+            res.json(obj);
+        })
+            .select({"product_price": 1, "product_upc" : 1, "product_name": 1, "product_category": 1, "product_quantity": 1, "_id": 0})
             .then(product => {
-                res.json(req.body);
+                res.send(product);
             })
             .catch(err => {
                 res
@@ -143,6 +134,94 @@ routes
             });
     })
 
+routes
+    .route('/products/update/:id')
+    .put(function (req, res) {
+
+        Products
+            .find(function (err, products) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.json(products);
+
+                }
+            });
+
+        var product_name = products.product_name;
+        var product_category = products.product_category;
+        var product_price = products.product_price;
+        var product_quantity = products.product_quantity;
+        var product_upc = products.product_upc;
+
+        var id = req.params.id;
+
+        Products.findOneAndUpdate({
+            _id: id
+        }, {
+            $set: {
+                product_name: req.body.product_name,
+                product_quantity: req.body.product_quantity,
+                product_upc: req.body.product_upc,
+                product_category: req.body.product_category,
+                product_price: req.body.product_price
+            }
+        }, {new: true}).then((docs) => {
+            res.send(docs);
+        })
+    })
+
+//Update price
+//TODO: Put filter to avoid null set variables.
+
+{/*
+
+todoRoutes.route('/update/:id').post(function(req, res) {
+    Todo.findById(req.params.id, function(err, todo) {
+        if (!todo)
+            res.status(404).send("data is not found");
+        else
+            todo.todo_description = req.body.todo_description;
+            todo.todo_responsible = req.body.todo_responsible;
+            todo.todo_priority = req.body.todo_priority;
+            todo.todo_completed = req.body.todo_completed;
+            todo.save().then(todo => {
+                res.json('Todo updated!');
+            })
+            .catch(err => {
+                res.status(400).send("Update not possible");
+            });
+    });
+});
+
+*/
+}
+routes
+    .route('/products/update_price/:id')
+    .put(function (req, res) {
+
+        Products
+            .find(function (err, products) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.json(products);
+
+                }
+            });
+
+        id = req.params.id;
+
+        Products.findOneAndUpdate({
+            _id: id
+        }, {
+            $set: {
+                product_price: req.body.product_price
+            }
+        }, {new: true}).then((docs) => {
+            res.send(docs);
+        })
+    })
 
 mongoose.connect(url, function (err, db) {
     if (err) {
