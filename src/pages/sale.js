@@ -53,34 +53,44 @@ class SalePage extends React.Component {
 
     onSubmit = () => {
         const info = {
-            product_upc: this.refs.product_upc.value,
+            product_upc: this.state.product_upc,
             product_quantity: this.state.new_quantity,
             product_name: this.state.product_name,
-            product_category: this.state.product_category
-            //transaction_total: this.state.transaction_total
+            product_category: this.state.product_category,
+            product_price: this.state.product_price,
+            transaction_total: this.state.transaction_total
 
         };
+
         //alert(this.state.new_quantity);
-        axios
-            .post('http://localhost:7000/products/update', info)
-            .then(res => {
-                console.log('POSTRESULTSDATA:' + res.data);
-                //console.log(JSON.stringify(info))
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
             
-        axios
-            .post('http://localhost:7000/transactions/add', info)
-            .then(res => {
-                console.log('POSTRESULTSDATA:' + res.data);
-                //console.log(JSON.stringify(info))
+        
+        axios.put('http://localhost:7000/products/update_quantity/' + this.refs.product_upc.value , {product_quantity: this.state.new_quantity})
+            .then(res => {    
+                console.log('updated qty!');
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch(err => {
+                console.log(err);
+            });
+
+        axios.post('http://localhost:7000/transactions/add', info)
+            .then(res => {    
+                console.log('todo added successfully');
             })
-    };
+            .catch(err => {
+                console.log(err);
+            });
+
+
+
+        }
+
+
+
+
+
+
+
 
     getDataFromDb = () => {
         fetch("http://localhost:7000/products")
@@ -88,23 +98,21 @@ class SalePage extends React.Component {
             .then(res => this.setState({products: res.data}));
     };
 
+
+
     onChangeUPC = (e) => {
         //console.log(e.target.value);
-
-
-        fetch('http://localhost:7000/products/'+e.target.value)
+        axios.get('http://localhost:7000/products/'+e.target.value)
         .then(response => {
 
-            
-            console.log(response.json());
-            var jsun = JSON.parse(response.data);
-
-            var name = jsun['product_name'];
-            var category = jsun['product_category'];            
-            var qty = jsun['product_quantity'];
-            var price = jsun['product_price'];
-            console.log("NAME:"+name);
-
+            console.log(response.data);
+            var jsun = JSON.parse(JSON.stringify(response.data));
+            var upc = jsun[0]['product_upc'];
+            var name = jsun[0]['product_name'];
+            var category = jsun[0]['product_category'];            
+            var qty = jsun[0]['product_quantity'];
+            var price = jsun[0]['product_price'];
+            this.setState({product_upc: upc});
             this.setState({product_name: name});
             this.setState({product_category: category});
             this.setState({product_quantity: qty});
@@ -114,7 +122,7 @@ class SalePage extends React.Component {
             
         })
         .catch(function (error) {
-            console.log(error);
+            console.log("ERR"+error);
         }) 
     }
 
@@ -123,23 +131,21 @@ class SalePage extends React.Component {
         //var newQty=(parseInt(this.state.product_quantity, 10) - parseInt(e.target.value, 10))
         //console.log(newQty);
         //console.log(this.state.product_quantity);
+        var new_qty = parseInt(this.state.product_quantity, 10) - parseInt(e.target.value, 10);
+        var new_transaction_total =  parseInt(this.state.product_quantity, 10) * parseInt(e.target.value, 10);
+        //console.log("NEW QUANT" + new_qty);
         if (e.target.value != undefined) { 
         this.setState({
-            //new_quantity:  (parseInt(this.state.product_quantity, 10)-parseInt(e.target.value, 10)),
-            transaction_total: (this.state.product_price * e.target.value)
+            new_quantity: new_qty,
+            transaction_total: new_transaction_total
         });
-        console.log("NEW QUANT" + this.state.transaction_total);
     }
-    else {
-        return
-    }
-
-    }
+    };
 
 
     render() {
 
-        let transactions = this.state.transactions
+        let transactions = this.state.transactions;
 
         return (
             <div>

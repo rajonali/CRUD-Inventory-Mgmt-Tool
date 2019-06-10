@@ -197,31 +197,23 @@ todoRoutes.route('/update/:id').post(function(req, res) {
 */
 }
 routes
-    .route('/products/update_price/:id')
+    .route('/products/update_quantity/:id')
     .put(function (req, res) {
 
-        Products
-            .find(function (err, products) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.json(products);
-
-                }
-            });
-
-        id = req.params.id;
+        var id = req.params.id;
 
         Products.findOneAndUpdate({
-            _id: id
+            "_id": id
         }, {
             $set: {
-                product_price: req.body.product_price
+                product_quantity: req.body.product_quantity
+
             }
         }, {new: true}).then((docs) => {
             res.send(docs);
         })
     })
+
 
 mongoose.connect(url, function (err, db) {
     if (err) {

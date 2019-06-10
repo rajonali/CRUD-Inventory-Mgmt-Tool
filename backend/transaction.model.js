@@ -5,24 +5,19 @@ var Schema = mongoose.Schema;
 var TransactionModelSchema = new Schema({
     product_upc: {
         type: mongoose.Schema.Types.Mixed,
-        required: true,
       },
       product_name: {
         type: mongoose.Schema.Types.Mixed,
-        required: true,
       },
       product_category: {
         type: mongoose.Schema.Types.Mixed,
-        required: true,
       },
       
       product_quantity: {
         type: mongoose.Schema.Types.Mixed,
-        required: true,
       },
       transaction_total: {
         type: mongoose.Schema.Types.Mixed,
-        required: true,
       }
     })
     
