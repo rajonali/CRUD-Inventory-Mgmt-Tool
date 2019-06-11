@@ -44,7 +44,7 @@ class SalePage extends React.Component {
     onSubmit = () => {
         const info = {
             product_upc: this.state.product_upc,
-            product_quantity: this.state.new_quantity,
+            product_quantity: this.state.user_entered_qty,
             product_name: this.state.product_name,
             product_category: this.state.product_category,
             product_price: this.state.product_price,
@@ -124,6 +124,7 @@ class SalePage extends React.Component {
         //console.log("NEW QUANT" + new_qty);
         if (e.target.value != undefined) { 
         this.setState({
+            user_entered_qty: e.target.value,
             new_quantity: new_qty,
             transaction_total: new_transaction_total
         });
