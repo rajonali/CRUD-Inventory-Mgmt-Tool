@@ -134,6 +134,32 @@ routes
             });
     })
 
+
+
+
+    routes
+    .route('/products/sku/:sku')
+    .get(function (req, res) {
+        Products.find({
+            "product_upc": req.params.sku
+        }, function (err, obj) {
+            //res.json(obj);
+        })
+            .select({"product_price": 1, "product_upc" : 1, "product_name": 1, "product_category": 1, "product_quantity": 1, "_id": 0})
+            .then(product => {
+
+                
+                res.send(product[0]);
+                
+            })
+            .catch(err => {
+                res
+                    .status(400)
+                    .send("Update not possible");
+            });
+    })
+
+
 routes
     .route('/products/update/:id')
     .put(function (req, res) {
@@ -171,6 +197,11 @@ routes
         })
     })
 
+
+
+
+
+    
 //Update price
 //TODO: Put filter to avoid null set variables.
 

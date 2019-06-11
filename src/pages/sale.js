@@ -102,16 +102,15 @@ class SalePage extends React.Component {
 
     onChangeUPC = (e) => {
         //console.log(e.target.value);
-        axios.get('http://localhost:7000/products/'+e.target.value)
+        axios.get('http://localhost:7000/products/sku/'+e.target.value)
         .then(response => {
-
             console.log(response.data);
             var jsun = JSON.parse(JSON.stringify(response.data));
-            var upc = jsun[0]['product_upc'];
-            var name = jsun[0]['product_name'];
-            var category = jsun[0]['product_category'];            
-            var qty = jsun[0]['product_quantity'];
-            var price = jsun[0]['product_price'];
+            var upc = jsun['product_upc'];
+            var name = jsun['product_name'];
+            var category = jsun['product_category'];            
+            var qty = jsun['product_quantity'];
+            var price = jsun['product_price'];
             this.setState({product_upc: upc});
             this.setState({product_name: name});
             this.setState({product_category: category});
