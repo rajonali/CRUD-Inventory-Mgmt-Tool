@@ -1,7 +1,6 @@
 import React from 'react'
 
 const axios = require('axios');
-const mongoose = require('mongoose');
 
 
 
@@ -36,15 +35,6 @@ class SalePage extends React.Component {
             .catch(function (error) {
                 console.log(error);
             }) 
-        axios
-            .get('http://localhost:7000/products/')
-            .then(response => {
-                this.setState({products: response.data});
-
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
 
     }
 
@@ -64,8 +54,8 @@ class SalePage extends React.Component {
 
         //alert(this.state.new_quantity);
             
-        
-        axios.put('http://localhost:7000/products/update_quantity/' + this.refs.product_upc.value , {product_quantity: this.state.new_quantity})
+        console.log("QUANT" + this.state.product_id);    
+        axios.put('http://localhost:7000/products/update_quantity/' + this.state.product_id , {"product_quantity": this.state.new_quantity})
             .then(res => {    
                 console.log('updated qty!');
             })
@@ -84,11 +74,6 @@ class SalePage extends React.Component {
 
 
         }
-
-
-
-
-
 
 
 
@@ -111,11 +96,14 @@ class SalePage extends React.Component {
             var category = jsun['product_category'];            
             var qty = jsun['product_quantity'];
             var price = jsun['product_price'];
+            var id = jsun['_id'];
+            console.log("ID : " + JSON.stringify(id));
             this.setState({product_upc: upc});
             this.setState({product_name: name});
             this.setState({product_category: category});
             this.setState({product_quantity: qty});
             this.setState({product_price: price});
+            this.setState({product_id: id});
 
 
             
@@ -131,6 +119,7 @@ class SalePage extends React.Component {
         //console.log(newQty);
         //console.log(this.state.product_quantity);
         var new_qty = parseInt(this.state.product_quantity, 10) - parseInt(e.target.value, 10);
+        console.log("NEW QTY" + new_qty);
         var new_transaction_total =  parseInt(this.state.product_quantity, 10) * parseInt(e.target.value, 10);
         //console.log("NEW QUANT" + new_qty);
         if (e.target.value != undefined) { 

@@ -12,7 +12,8 @@ class ProductsPage extends React.Component {
             product_category: "",
             product_name: "",
             product_price: "",
-            product_quantity: 1
+            product_quantity: 0,
+            product_id: ""
         };
         this.onSubmit = this
             .onSubmit
@@ -40,7 +41,8 @@ class ProductsPage extends React.Component {
             "product_name": this.refs.product_name.value,
             "product_category": this.refs.product_category.value,
             "product_quantity": this.refs.product_quantity.value,
-            "product_price": this.refs.product_price.value
+            "product_price": this.refs.product_price.value,
+
         };
 
 
