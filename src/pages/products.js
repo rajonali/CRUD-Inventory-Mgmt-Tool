@@ -13,11 +13,15 @@ class ProductsPage extends React.Component {
             product_name: "",
             product_price: "",
             product_quantity: 0,
-            product_id: ""
+            product_id: "",    
+            product_order_qty: ""        
         };
         this.onSubmit = this
             .onSubmit
             .bind(this);
+
+        this.handleChangeOrderQty = this.handleChangeOrderQty.bind(this);
+
 
     }
 
@@ -42,6 +46,11 @@ class ProductsPage extends React.Component {
             "product_category": this.refs.product_category.value,
             "product_quantity": this.refs.product_quantity.value,
             "product_price": this.refs.product_price.value,
+            "quantity_sold": 0,
+            "min_stock_qty": this.refs.min_order_qty.value,
+            "order_qty": 0,
+            "order_subtotal": 0,
+            "place_order": "Yes "
 
         };
 
@@ -59,6 +68,11 @@ class ProductsPage extends React.Component {
             })
 
     };
+
+
+    handleChangeOrderQty(e) {
+        this.setState({product_order_qty: e.target.value});
+    }
 
     render() {
         let products = this.state.products
@@ -104,7 +118,7 @@ class ProductsPage extends React.Component {
                                 Name:
                                 <input
                                         type="text"
-                                        placeholder="Name"
+                                        placeholder="name"
                                         ref="product_name"
                                         />
                                 </pre>
@@ -116,11 +130,12 @@ class ProductsPage extends React.Component {
                                 Category:
                                 <input
                                         type="text"
-                                        placeholder="Category"
+                                        placeholder="category"
                                         ref="product_category"/>
                                 </pre>
 
                                         </label>
+                                        
                                         <br/>
 
                                         <label>
@@ -128,7 +143,7 @@ class ProductsPage extends React.Component {
                                 Qty: 
                                 <input
                                         type="text"
-                                        placeholder="Quantity"
+                                        placeholder="quantity"
                                         ref="product_quantity"/>
 
                                 </pre>
@@ -147,6 +162,21 @@ class ProductsPage extends React.Component {
                                 </pre>
 
                                         </label>
+                                        <br />
+
+
+                                        <label>
+                                            <pre>
+                                Min. Order Qty: 
+                                <input
+                                        type="text"
+                                        placeholder="min order qty" 
+                                        ref="min_order_qty"/>
+
+                                </pre>
+
+                                        </label>
+
 
                                     </div>
                                     <button onClick={this.onSubmit} type="submit">Save Product
@@ -170,6 +200,12 @@ class ProductsPage extends React.Component {
                                         <th scope="col">Category</th>
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Price</th>
+                                        <th scope="col">Quantity Sold</th>
+                                        <th scope="col">Min. Stock Qty.</th>
+                                        <th scope="col">Order Quantity</th>
+                                        <th scope="col">Order Subtotal</th>
+                                        <th scope="col">Place Order</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -179,6 +215,12 @@ class ProductsPage extends React.Component {
                                         <td>{product.product_category}</td>
                                         <td>{product.product_quantity}</td>
                                         <td>{product.product_price}</td>
+                                        <td>{product.quantity_sold}</td>
+                                        <td>{product.min_stock_qty}</td>
+                                        <td><input type="text" onChange={ this.handleChangeOrderQty } value={this.state.product_order_qty} placeholder={product.order_qty} /></td>
+                                        <td>{this.state.product_order_qty * product.product_price}</td>
+                                        <td><input type="checkbox" /></td>
+
                                     </tr>))}
                                 </tbody>
                             </table>
