@@ -7,8 +7,11 @@ const path = require('path');
 
 const app = express();
 
+
 const url = 'mongodb://127.0.0.1/data';
 const MongoClient = require('mongodb').MongoClient
+
+
 
 const routes = express.Router();
 

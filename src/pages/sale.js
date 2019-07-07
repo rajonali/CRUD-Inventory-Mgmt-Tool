@@ -2,9 +2,6 @@ import React from 'react'
 
 const axios = require('axios');
 
-
-
-
 class SalePage extends React.Component {
 
     constructor(props) {
@@ -26,6 +23,8 @@ class SalePage extends React.Component {
     }
 
     componentDidMount() {
+        window.addEventListener("keyup", this.keyHandling);
+
         axios
             .get('http://localhost:7000/transactions/')
             .then(response => {
@@ -34,12 +33,14 @@ class SalePage extends React.Component {
             })
             .catch(function (error) {
                 console.log(error);
-            }) 
+            })
 
     }
 
-    
-
+    componentWillUnmount()
+    {
+        window.removeEventListener("keyup", this.keyHandling);
+    }
 
     onSubmit = () => {
         const info = {
@@ -49,33 +50,45 @@ class SalePage extends React.Component {
             product_category: this.state.product_category,
             product_price: this.state.product_price,
             transaction_total: this.state.transaction_total
-
         };
 
+
         //alert(this.state.new_quantity);
-            
-        console.log("QUANT" + this.state.product_id);    
-        axios.put('http://localhost:7000/products/update_quantity/' + this.state.product_id , {"product_quantity": this.state.new_quantity})
-            .then(res => {    
+
+        console.log("QUANT" + this.state.product_id);
+        axios
+            .put('http://localhost:7000/products/update_quantity/' + this.state.product_id, {"product_quantity": this.state.new_quantity})
+            .then(res => {
                 console.log('updated qty!');
             })
             .catch(err => {
                 console.log(err);
             });
 
-        axios.post('http://localhost:7000/transactions/add', info)
-            .then(res => {    
+        axios
+            .post('http://localhost:7000/transactions/add', info)
+            .then(res => {
                 console.log('todo added successfully');
             })
             .catch(err => {
                 console.log(err);
             });
 
+    }
 
+    keyHandling = (key) => {
+        console.log("Key code: " + key.keyCode);
+        var ENTER_KEY = 13;
 
+        switch (key.keyCode) {
+            case ENTER_KEY:
+                this.onSubmit();
+                break;
+            default:
+                break;
         }
 
-
+    };
 
     getDataFromDb = () => {
         fetch("http://localhost:7000/products")
@@ -83,54 +96,45 @@ class SalePage extends React.Component {
             .then(res => this.setState({products: res.data}));
     };
 
-
-
     onChangeUPC = (e) => {
         //console.log(e.target.value);
-        axios.get('http://localhost:7000/products/sku/'+e.target.value)
-        .then(response => {
-            console.log(response.data);
-            var jsun = JSON.parse(JSON.stringify(response.data));
-            var upc = jsun['product_upc'];
-            var name = jsun['product_name'];
-            var category = jsun['product_category'];            
-            var qty = jsun['product_quantity'];
-            var price = jsun['product_price'];
-            var id = jsun['_id'];
-            console.log("ID : " + JSON.stringify(id));
-            this.setState({product_upc: upc});
-            this.setState({product_name: name});
-            this.setState({product_category: category});
-            this.setState({product_quantity: qty});
-            this.setState({product_price: price});
-            this.setState({product_id: id});
+        axios
+            .get('http://localhost:7000/products/sku/' + e.target.value)
+            .then(response => {
+                console.log(response.data);
+                var jsun = JSON.parse(JSON.stringify(response.data));
+                var upc = jsun['product_upc'];
+                var name = jsun['product_name'];
+                var category = jsun['product_category'];
+                var qty = jsun['product_quantity'];
+                var price = jsun['product_price'];
+                var id = jsun['_id'];
+                console.log("ID : " + JSON.stringify(id));
+                this.setState({product_upc: upc});
+                this.setState({product_name: name});
+                this.setState({product_category: category});
+                this.setState({product_quantity: qty});
+                this.setState({product_price: price});
+                this.setState({product_id: id});
 
-
-            
-        })
-        .catch(function (error) {
-            console.log("ERR"+error);
-        }) 
+            })
+            .catch(function (error) {
+                console.log("ERR" + error);
+            })
     }
-
 
     onChangeQty = (e) => {
-        //var newQty=(parseInt(this.state.product_quantity, 10) - parseInt(e.target.value, 10))
-        //console.log(newQty);
-        //console.log(this.state.product_quantity);
+        // var newQty=(parseInt(this.state.product_quantity, 10) -
+        // parseInt(e.target.value, 10)) console.log(newQty);
+        // console.log(this.state.product_quantity);
         var new_qty = parseInt(this.state.product_quantity, 10) - parseInt(e.target.value, 10);
         console.log("NEW QTY" + new_qty);
-        var new_transaction_total =  parseInt(this.state.product_quantity, 10) * parseInt(e.target.value, 10);
+        var new_transaction_total = parseInt(this.state.product_quantity, 10) * parseInt(e.target.value, 10);
         //console.log("NEW QUANT" + new_qty);
-        if (e.target.value != undefined) { 
-        this.setState({
-            user_entered_qty: e.target.value,
-            new_quantity: new_qty,
-            transaction_total: new_transaction_total
-        });
-    }
+        if (e.target.value != undefined) {
+            this.setState({user_entered_qty: e.target.value, new_quantity: new_qty, transaction_total: new_transaction_total});
+        }
     };
-
 
     render() {
 
@@ -150,7 +154,7 @@ class SalePage extends React.Component {
                                 <strong>Enter Sale:</strong>
                             </h3><br/>
                             <div style={{}}>
-                            <label>
+                                <label>
                                     <pre>Name: {this.state.product_name}</pre>
                                 </label><br/>
                                 <label>
@@ -161,7 +165,7 @@ class SalePage extends React.Component {
                                     <pre>UPC: <input onChange={this.onChangeUPC.bind(this)} ref="product_upc"></input> @ ${this.state.product_price}</pre>
                                 </label><br/>
                                 <label>
-                                    <pre>Qty: <input onChange={this.onChangeQty.bind(this)} ref="product_quantity"></input> {this.state.product_quantity} Available</pre>
+                                    <pre>Qty: <input value="1" onChange={this.onChangeQty.bind(this)} ref="product_quantity"></input> {this.state.product_quantity} Available</pre>
                                 </label><br/>
 
                             </div>
