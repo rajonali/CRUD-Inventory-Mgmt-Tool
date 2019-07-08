@@ -26,6 +26,8 @@ class ProductsPage extends React.Component {
     }
 
     componentDidMount() {
+        window.addEventListener("keydown", this.keyHandling);
+
         axios
             .get('http://localhost:7000/products/')
             .then(response => {
@@ -37,6 +39,14 @@ class ProductsPage extends React.Component {
             })
 
     }
+
+
+    componentWillUnmount()
+    {
+        window.removeEventListener("keydown", this.keyHandling);
+    }
+
+
 
     onSubmit = () => {
         
@@ -72,7 +82,24 @@ class ProductsPage extends React.Component {
 
     handleChangeOrderQty(e) {
         this.setState({product_order_qty: e.target.value});
+
     }
+
+
+    keyHandling = (key) => {
+        console.log("Key code: " + key.keyCode);
+        var ENTER_KEY = 13;
+
+        switch (key.keyCode) {
+            case ENTER_KEY:
+                key.preventDefault();
+                return false;
+            default:
+                break;
+        }
+
+    };
+
 
     render() {
         let products = this.state.products

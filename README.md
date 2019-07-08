@@ -35,20 +35,30 @@ Current features are:
 ✅ Stock management <br/>
 ✅ Sale register with transactions logging <br/>
 
+
 To-Do:
 ------
-* Deploy to Netlify
-* Expenses logging
-* Reporting on sales, orders, expenses, inventory status
-* Taxation
-* Invoicing
-* Receipt and invoice printing and/or emailing
-* Barcode generation and printing
-* Suppliers and Customers database
-* Authentication and multiuser with permission control
-* Receivings
+* Submit user submitted barcode
 
-The software is written in Javascript language, uses React Framework, MongoDB as data storage, and an Express back-end server for the REST API.
+* Disable product page enter key by searching for key and ignoring it
+
+* Being able to edit the fields on all pages with data grid
+
+* redux action to search and add to global state: products and transactions 
+
+* Be able to edit certain fields
+
+* If there is no results when searching for the object, then prompt a modal to ask the user if they would like to add enter more details about the product. They can leave some fields blank if they are in a hurry and edit it later
+
+* Create an action to retrieve products and edit their fields and calculate order quantities    
+
+* Create a global state for orders to place
+
+* Create an action to add an order to order objects array
+
+* Create a boolean state for place order field in each product object
+
+* The software is written in Javascript language, uses React Framework, MongoDB as data storage, and an Express back-end server for the REST API.
 
 Demo:
 -----
