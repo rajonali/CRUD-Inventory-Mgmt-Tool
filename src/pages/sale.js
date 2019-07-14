@@ -9,7 +9,9 @@ class SalePage extends React.Component {
 
         this.product_upc_ref = React.createRef();
         this.product_quantity_ref = React.createRef();
-        this.onChangeUPC.bind(this);
+        this
+            .onChangeUPC
+            .bind(this);
 
         this.state = {
             transactions: [],
@@ -20,8 +22,8 @@ class SalePage extends React.Component {
             product_quantity: 1,
             transaction_total: 0,
             new_quantity: 0,
-
-            fetchedQty : 0
+            existingProduct: false,
+            fetchedQty: 0
 
         };
         this.onSubmit = this
@@ -112,9 +114,10 @@ class SalePage extends React.Component {
             .then(response => {
                 console.log(response.data);
                 if (!response.data) {
+                    this.setState({existingProduct:true})
                     console.log("NO ID FOUND")
-                }
-                else {
+                } else {
+                    this.setState({existingProduct:true});
                     var product_data = JSON.parse(JSON.stringify(response.data));
                     var upc = product_data['product_upc'];
                     var name = product_data['product_name'];
@@ -123,16 +126,13 @@ class SalePage extends React.Component {
                     var price = product_data['product_price'];
                     var id = product_data['_id'];
                     console.log("ID : " + JSON.stringify(id));
+                    this.setState({product_name: name});
+                    //this.setState({product_upc: 1});
+                    this.setState({product_category: category});
+                    this.setState({product_price: price});
+                    //this.setState({product_id: id});
 
-    
                 }
-                //this.setState({product_upc: upc});
-                //this.setState({product_name: name});
-                //this.setState({product_upc: 1});
-                //this.setState({product_category: category});
-                //this.setState({product_category: "UNDEFINED"});
-                //this.setState({product_price: 1});
-                //this.setState({product_id: id});
 
             })
             .catch(function (error) {
