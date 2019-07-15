@@ -20,7 +20,6 @@ class ProductsPage extends React.Component {
             .onSubmit
             .bind(this);
 
-        this.handleChangeOrderQty = this.handleChangeOrderQty.bind(this);
 
 
     }
@@ -80,10 +79,6 @@ class ProductsPage extends React.Component {
     };
 
 
-    handleChangeOrderQty(e) {
-        this.setState({product_order_qty: e.target.value});
-
-    }
 
 
     keyHandling = (key) => {
@@ -229,10 +224,7 @@ class ProductsPage extends React.Component {
                                         <th scope="col">Price</th>
                                         <th scope="col">Quantity Sold</th>
                                         <th scope="col">Min. Stock Qty.</th>
-                                        <th scope="col">Order Quantity</th>
-                                        <th scope="col">Order Subtotal</th>
-                                        <th scope="col">Place Order</th>
-
+            
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -244,10 +236,7 @@ class ProductsPage extends React.Component {
                                         <td>{product.product_price}</td>
                                         <td>{product.quantity_sold}</td>
                                         <td>{product.min_stock_qty}</td>
-                                        <td><input type="text" onChange={ this.handleChangeOrderQty } value={this.state.product_order_qty} placeholder={product.order_qty} /></td>
-                                        <td>{this.state.product_order_qty * product.product_price}</td>
-                                        <td><input type="checkbox" /></td>
-
+     
                                     </tr>))}
                                 </tbody>
                             </table>
