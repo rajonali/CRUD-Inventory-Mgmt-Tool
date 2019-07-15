@@ -19,12 +19,11 @@ class SalePage extends React.Component {
             product_upc: "?",
             product_category: "?",
             product_name: "?",
-            product_quantity: 1,
+            product_quantity: 0,
             quantity_sold: 0,
             transaction_total: 0,
             new_quantity: 0,
             existingProduct: false,
-            fetchedQty: 0
 
         };
         this.onSubmit = this
@@ -64,7 +63,8 @@ class SalePage extends React.Component {
             product_name: this.state.product_name,
             product_category: this.state.product_category,
             product_price: this.state.product_price,
-            transaction_total: this.state.transaction_total
+            transaction_total: this.state.transaction_total,
+            quantity_sold: this.state.quantity_sold
         };
 
 
@@ -199,7 +199,7 @@ class SalePage extends React.Component {
                                         @ ${this.state.product_price}</div>
                                 </label><br/>
                                 <label>
-                                    <pre>Qty: <input value={1} onChange={this.onChangeQty} ref={this.product_qty_ref}></input> {this.state.product_quantity} Available</pre>
+                                    <pre>{this.state.product_quantity} Available</pre>
                                 </label><br/>
 
                             </div>
