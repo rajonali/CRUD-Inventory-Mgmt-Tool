@@ -64,7 +64,11 @@ class SalePage extends React.Component {
             transaction_total: this.state.transaction_total
         };
 
+        var new_qty = parseInt(this.state.product_quantity, 10) - 1;
+        this.setState({new_quantity: new_qty, transaction_total: this.state.transaction_total});
 
+        console.log("NEWQTY"+new_qty);
+        
         axios
             .put('http://localhost:7000/products/update_quantity/' + this.state.product_id, {"product_quantity": this.state.new_quantity})
             .then(res => {
@@ -147,6 +151,7 @@ class SalePage extends React.Component {
                     console.log("ID : " + JSON.stringify(id));
                     this.setState({product_name: name});
                     this.setState({product_quantity: qty});
+                    console.log("QTY"+qty);
                     this.setState({product_category: category});
                     this.setState({product_price: price});
                     this.setState({quantity_sold: quantity_sold});
@@ -159,48 +164,8 @@ class SalePage extends React.Component {
                 console.log("ERR NO UPC FOUND" + error);
             })
     };
-    /*
-        axios
-            .get('http://localhost:7000/products/sku/' + e.target.value)
-            .then(response => {
-                console.log(response.data);
-                var jsun = JSON.parse(JSON.stringify(response.data));
-                //var upc = jsun['product_upc'];
-                var name = jsun['product_name'];
-                //var category = jsun['product_category'];
-                //var qty = jsun['product_quantity'];
-                var price = jsun['product_price'];
-                var id = jsun['_id'];
-                console.log("ID : " + JSON.stringify(id));
-                //this.setState({product_upc: upc});
-                //this.setState({product_name: name});
-                //this.setState({product_upc: 1});
-                //this.setState({product_category: category});
-                //this.setState({product_category: "UNDEFINED"});
-                //this.setState({product_price: 1});
-                //this.setState({product_id: id});
 
-            })
-            .catch(function (error) {
-                console.log("ERR NO UPC FOUND" + error);
-            })
-            */
 
-    onChangeQty = (e) => {
-        // var newQty=(parseInt(this.state.product_quantity, 10) -
-        // parseInt(e.target.value, 10)) console.log(newQty);
-        // console.log(this.state.product_quantity);
-        var new_qty = parseInt(this.state.product_quantity, 10) - parseInt(e.target.value, 10);
-        //console.log("NEW QTY" + new_qty);
-
-        
-        //console.log("NEW QUANT" + new_qty);
-        if (e.target.value != undefined) {
-            this.setState({new_quantity: new_qty, transaction_total: this.state.transaction_total});
-        }
-        console.log(this.state.quantity_sold);
-
-    };
 
     render() {
 
@@ -233,7 +198,7 @@ class SalePage extends React.Component {
                                         @ ${this.state.product_price}</div>
                                 </label><br/>
                                 <label>
-                                    <pre>Qty: <input onChange={this.onChangeQty} ref={this.product_qty_ref}></input> {this.state.product_quantity} Available</pre>
+                                    <pre>Qty: <input value={1} onChange={this.onChangeQty} ref={this.product_qty_ref}></input> {this.state.product_quantity} Available</pre>
                                 </label><br/>
 
                             </div>
