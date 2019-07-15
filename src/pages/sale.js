@@ -55,6 +55,9 @@ class SalePage extends React.Component {
 
     onSubmit = () => {
 
+        var new_qty = parseInt(this.state.product_quantity, 10) - 1;
+        this.setState({new_quantity: new_qty, transaction_total: this.state.transaction_total});
+
         const info = {
             product_upc: this.state.product_upc,
             product_quantity: this.state.new_quantity, //check            
@@ -64,8 +67,6 @@ class SalePage extends React.Component {
             transaction_total: this.state.transaction_total
         };
 
-        var new_qty = parseInt(this.state.product_quantity, 10) - 1;
-        this.setState({new_quantity: new_qty, transaction_total: this.state.transaction_total});
 
         console.log("NEWQTY"+new_qty);
         
