@@ -20,6 +20,7 @@ class SalePage extends React.Component {
             product_category: "?",
             product_name: "?",
             product_quantity: 1,
+            quantity_sold: 0,
             transaction_total: 0,
             new_quantity: 0,
             existingProduct: false,
@@ -56,12 +57,13 @@ class SalePage extends React.Component {
 
         const info = {
             product_upc: this.state.product_upc,
-            product_quantity: this.state.product_quantity,
+            product_quantity: this.state.new_quantity, //check            
             product_name: this.state.product_name,
             product_category: this.state.product_category,
             product_price: this.state.product_price,
             transaction_total: this.state.transaction_total
         };
+
 
         axios
             .put('http://localhost:7000/products/update_quantity/' + this.state.product_id, {"product_quantity": this.state.new_quantity})
@@ -71,6 +73,17 @@ class SalePage extends React.Component {
             .catch(err => {
                 console.log(err);
             });
+        
+        
+            axios
+            .put('http://localhost:7000/products/update_quantity_sold/' + this.state.product_id, {"quantity_sold": (this.state.quantity_sold+=1)})
+            .then(res => {
+                console.log('updated qty!');
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        
 
         axios
             .post('http://localhost:7000/transactions/add', info)
@@ -80,6 +93,9 @@ class SalePage extends React.Component {
             .catch(err => {
                 console.log(err);
             });
+
+            window.location.reload();
+
 
     }
 
@@ -114,23 +130,27 @@ class SalePage extends React.Component {
             .then(response => {
                 console.log(response.data);
                 if (!response.data) {
-                    this.setState({existingProduct:true})
+                    this.setState({existingProduct:false})
                     console.log("NO ID FOUND")
                 } else {
                     this.setState({existingProduct:true});
                     var product_data = JSON.parse(JSON.stringify(response.data));
+                    console.log("RESPONSE DATA" + JSON.stringify(response.data));
                     var upc = product_data['product_upc'];
                     var name = product_data['product_name'];
                     var category = product_data['product_category'];
                     var qty = product_data['product_quantity'];
                     var price = product_data['product_price'];
                     var id = product_data['_id'];
+                    var quantity_sold = product_data['quantity_sold'];
+                    console.log("QUANT SOLD:" + quantity_sold);
                     console.log("ID : " + JSON.stringify(id));
                     this.setState({product_name: name});
-                    //this.setState({product_upc: 1});
+                    this.setState({product_quantity: qty});
                     this.setState({product_category: category});
                     this.setState({product_price: price});
-                    //this.setState({product_id: id});
+                    this.setState({quantity_sold: quantity_sold});
+                    this.setState({product_id: id});
 
                 }
 
@@ -172,11 +192,14 @@ class SalePage extends React.Component {
         // console.log(this.state.product_quantity);
         var new_qty = parseInt(this.state.product_quantity, 10) - parseInt(e.target.value, 10);
         //console.log("NEW QTY" + new_qty);
-        var new_transaction_total = parseInt(this.state.product_quantity, 10) * parseInt(e.target.value, 10);
+
+        
         //console.log("NEW QUANT" + new_qty);
         if (e.target.value != undefined) {
-            this.setState({product_quantity: e.target.value, new_quantity: new_qty, transaction_total: new_transaction_total});
+            this.setState({new_quantity: new_qty, transaction_total: this.state.transaction_total});
         }
+        console.log(this.state.quantity_sold);
+
     };
 
     render() {
@@ -206,7 +229,7 @@ class SalePage extends React.Component {
 
                                 <label>
                                     <div>UPC:
-                                        <input onChange={this.onChangeUPC} ref={this.product_upc_ref}></input>
+                                        <input autoFocus onChange={this.onChangeUPC} ref={this.product_upc_ref}></input>
                                         @ ${this.state.product_price}</div>
                                 </label><br/>
                                 <label>

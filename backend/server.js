@@ -148,7 +148,7 @@ routes
         }, function (err, obj) {
             //res.json(obj);
         })
-            .select({"product_price": 1, "product_upc" : 1, "product_name": 1, "product_category": 1, "product_quantity": 1, "_id": 1})
+            .select({"product_price": 1, "product_upc" : 1, "product_name": 1, "product_category": 1, "product_quantity": 1,"quantity_sold": 1, "_id": 1})
             .then(product => {
 
                 
@@ -251,6 +251,28 @@ routes
             res.send(docs);
         })
     })
+
+
+
+    routes
+    .route('/products/update_quantity_sold/:id')
+    .put(function (req, res) {
+
+        var id = req.params.id;
+
+        Products.findOneAndUpdate({
+            "_id": id
+        }, {
+            $set: {
+                quantity_sold: req.body.quantity_sold
+
+            }
+        }, {new: true}).then((docs) => {
+            res.send(docs);
+        })
+    })
+
+    
 
 
 mongoose.connect(url, function (err, db) {
