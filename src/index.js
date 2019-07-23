@@ -12,6 +12,7 @@ import ReportPage from './pages/report';
 import ProductsPage from './pages/products';
 import OperationsPage from './pages/operations';
 import { Button } from 'react-bootstrap';
+import ShoppingPage from './pages/report/shopping';
 
 
 
@@ -43,6 +44,8 @@ const routing = (
         <Route exact path="/" component={App} />
         <Route path="/products" component={ProductsPage} />
         <Route path="/reports" component={ReportPage} />
+        <Route path="/shopping" component={ShoppingPage} />
+        
         <Route path="/operations" component={OperationsPage} />
       </div>
     </Router>

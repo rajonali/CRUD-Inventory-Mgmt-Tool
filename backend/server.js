@@ -281,7 +281,7 @@ routes
         }, function (err, obj) {
             res.json(obj);
         })
-            .select({"product_price": 1, "product_upc" : 1, "product_name": 1, "product_category": 1, "product_quantity": 1, "_id": 1})
+            .select({"product_price": 1, "product_upc" : 1, "product_name": 1, "product_category": 1, "product_quantity": 1,"min_stock_qty": 1, "_id": 1})
             .then(product => {
                 res.send(product);
             })

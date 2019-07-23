@@ -20,10 +20,45 @@ class ReportPage extends React.Component {
                         Reports
                     </strong>
                 </header>
-<body style={{
-                paddingTop: '10px',
-            }}>
-</body>  
+<body style={{marginTop:'50px'}}>
+<center>
+<button
+                                style={{
+                                height: '100px',
+                                width: '500px',
+                                marginTop: '25px',
+
+                            }}>
+                                <h3>
+                                <a href="/shopping" style={{color:'black'}}>SHOPPING LIST</a>
+                                          </h3>
+                            </button>
+                            <br />
+                            <button
+                                style={{
+                                height: '100px',
+                                width: '500px',
+                                marginTop: '25px',
+
+                            }}>
+                                <h3>
+                                    <strong>SALES</strong>
+                                </h3>
+                            </button>
+                            <br />
+                            <button
+                                style={{
+                                height: '100px',
+                                width: '500px',
+                                marginTop: '25px',
+
+                            }}>
+                                <h3>
+                                    <strong>EXPORT TRANSACTIONS</strong>
+                                </h3>
+                            </button>
+                            </center>
+                            </body>  
             </div>
   )
         }}
