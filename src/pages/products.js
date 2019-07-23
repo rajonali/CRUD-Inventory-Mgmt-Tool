@@ -59,7 +59,7 @@ class ProductsPage extends React.Component {
             "min_stock_qty": this.refs.min_order_qty.value,
             "order_qty": 0,
             "order_subtotal": 0,
-            "place_order": "Yes "
+            "place_order": false
 
         };
 

@@ -272,6 +272,25 @@ routes
         })
     })
 
+
+    routes
+    .route('/shopping/list')
+    .get(function (req, res) {
+        Products.find({
+            "place_order": true 
+        }, function (err, obj) {
+            res.json(obj);
+        })
+            .select({"product_price": 1, "product_upc" : 1, "product_name": 1, "product_category": 1, "product_quantity": 1, "_id": 1})
+            .then(product => {
+                res.send(product);
+            })
+            .catch(err => {
+                res
+                    .status(400)
+                    .send("Update not possible");
+            });
+    })
     
 
 
