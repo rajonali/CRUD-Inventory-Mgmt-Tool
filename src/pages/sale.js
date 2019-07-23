@@ -23,6 +23,8 @@ class SalePage extends React.Component {
             quantity_sold: 0,
             transaction_total: 0,
             new_quantity: 0,
+            min_stock_qty: 0,
+            place_order: false,
             existingProduct: false,
 
         };
@@ -145,18 +147,46 @@ class SalePage extends React.Component {
                     var name = product_data['product_name'];
                     var category = product_data['product_category'];
                     var qty = product_data['product_quantity'];
+                    var min_qty = product_data['min_stock_qty']
                     var price = product_data['product_price'];
                     var id = product_data['_id'];
                     var quantity_sold = product_data['quantity_sold'];
-                    console.log("QUANT SOLD:" + quantity_sold);
-                    console.log("ID : " + JSON.stringify(id));
+                    var place_order_flag = product_data['place_order'];
+
+                    if (qty <= min_qty) {
+                        place_order_flag = true;
+                        axios
+                        .put('http://localhost:7000/products/update_order_flag/' + id, {"place_order": true})
+                        .then(res => {
+                            alert('PLACED ORDER FLAG');
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                    }
+
+                    else {
+                        place_order_flag = false;
+                        axios
+                        .put('http://localhost:7000/products/update_order_flag/' + id, {"place_order": false})
+                        .then(res => {
+                            alert('PLACED ORDER FLAG');
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+
+                    }
                     this.setState({product_name: name});
                     this.setState({product_quantity: qty});
-                    console.log("QTY"+qty);
+                    this.setState({min_stock_qty: min_qty});
+                    this.setState({place_order: place_order_flag});
+
                     this.setState({product_category: category});
                     this.setState({product_price: price});
                     this.setState({quantity_sold: quantity_sold});
                     this.setState({product_id: id});
+
 
                 }
 

@@ -14,7 +14,8 @@ class ProductsPage extends React.Component {
             product_price: "",
             product_quantity: 0,
             product_id: "",    
-            product_order_qty: ""        
+            product_order_qty: "",
+            min_order_qty: 0     
         };
         this.onSubmit = this
             .onSubmit
