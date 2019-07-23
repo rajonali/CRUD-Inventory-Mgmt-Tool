@@ -158,7 +158,7 @@ class SalePage extends React.Component {
                         axios
                         .put('http://localhost:7000/products/update_order_flag/' + id, {"place_order": true})
                         .then(res => {
-                            alert('PLACED ORDER FLAG');
+                            alert('NOTICE: ITEM RUNNING LOW');
                         })
                         .catch(err => {
                             console.log(err);
