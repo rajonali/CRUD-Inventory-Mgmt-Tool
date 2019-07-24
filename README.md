@@ -38,21 +38,27 @@ Current features are:
 
 To-Do:
 ------
-* Submit user submitted barcode
+* Refactor code
 
-* Disable product page enter key by searching for key and ignoring it
+* Make sure the current product state scope is reset completely for all fields before changing focus to another product.
+
+* Create a modal that pops up if a product is not found in db and prompt user to insert the product into the db.
+
+* Store images in db for each product.
+
+* Create a function to sum all sales and present on sales report page. Create a tax calculator function too.
+
+* Create column field for product that shows the price the product was bought for. 
 
 * Being able to edit the fields on all pages with data grid
 
 * redux action to search and add to global state: products and transactions 
 
-* Be able to edit certain fields
-
 * If there is no results when searching for the object, then prompt a modal to ask the user if they would like to add enter more details about the product. They can leave some fields blank if they are in a hurry and edit it later
 
 * Create an action to retrieve products and edit their fields and calculate order quantities    
 
-* Create a global state for orders to place
+* Create global state for orders to place
 
 * Create an action to add an order to order objects array
 

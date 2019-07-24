@@ -57,7 +57,7 @@ class SalePage extends React.Component {
     onSubmit = () => {
 
         var new_qty = parseInt(this.state.product_quantity, 10) - 1;
-        this.setState({new_quantity: new_qty, transaction_total: this.state.transaction_total});
+        this.setState({new_quantity: new_qty, transaction_total: this.state.product_price});
 
         const info = {
             product_upc: this.state.product_upc,
@@ -69,8 +69,6 @@ class SalePage extends React.Component {
             quantity_sold: this.state.quantity_sold
         };
 
-
-        console.log("NEWQTY"+new_qty);
         
         axios
             .put('http://localhost:7000/products/update_quantity/' + this.state.product_id, {"product_quantity": this.state.new_quantity})
@@ -170,7 +168,7 @@ class SalePage extends React.Component {
                         axios
                         .put('http://localhost:7000/products/update_order_flag/' + id, {"place_order": false})
                         .then(res => {
-                            alert('PLACED ORDER FLAG');
+                            //alert('PLACED ORDER FLAG');
                         })
                         .catch(err => {
                             console.log(err);
